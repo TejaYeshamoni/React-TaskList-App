@@ -1,6 +1,6 @@
-
-
 import React from 'react';
+import './index.css';
+const statusOptions = ['Started', 'In Progress', 'Completed'];
 
 function TaskStatus({ task, onUpdateTaskStatus }) {
   const handleStatusChange = (newStatus) => {
@@ -8,11 +8,18 @@ function TaskStatus({ task, onUpdateTaskStatus }) {
   };
 
   return (
-    <div>
-      <p>{task.name} - Current Status: {task.status}</p>
-      <button onClick={() => handleStatusChange('Started')}>Start</button>
-      <button onClick={() => handleStatusChange('In Progress')}>In Progress</button>
-      <button onClick={() => handleStatusChange('Completed')}>Complete</button>
+    <div className="task-status">
+      <p className="task-name">{task.name} - Current Status: <span className={`status ${task.status.toLowerCase()}`}>{task.status}</span></p>
+      {statusOptions.map(status => (
+        <button
+          key={status}
+          className={`status-button ${status.toLowerCase()}`}
+          disabled={task.status === status}
+          onClick={() => handleStatusChange(status)}
+        >
+          {status}
+        </button>
+      ))}
     </div>
   );
 }
