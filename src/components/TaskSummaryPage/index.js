@@ -12,7 +12,8 @@ const statusColors = {
 function Task({ task }) {
   return (
     <li className="task-item">
-      {task.name} - Status: <span className={`status ${task.status.toLowerCase()}`}>{task.status}</span> - Assigned to: {task.assignedTo}
+      {task.name} - Status: <span className={`status ${task.status.toLowerCase()}`}>{task.status}</span> - Assigned to: {task.assignedTo || 'Not assigned'}
+      {task.status === 'Completed' && <p>Task completed by: {task.assignedTo}</p>}
     </li>
   );
 }

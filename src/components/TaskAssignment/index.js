@@ -26,6 +26,12 @@ function TaskAssignment() {
       const updatedTasks = taskList.map(task => task.id === selectedTask ? { ...task, assignedTo: selectedUser } : task);
       setTaskList(updatedTasks);
       setMessage(`Task ${taskToAssign.name} is now assigned to ${selectedUser}`);
+      
+      // Update selectedTask to the id of the first unassigned task
+      const firstUnassignedTask = updatedTasks.find(task => !task.assignedTo);
+      if (firstUnassignedTask) {
+        setSelectedTask(firstUnassignedTask.id);
+      }
     }
   };
 

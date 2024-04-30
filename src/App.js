@@ -25,7 +25,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Task List Application</h1>
+      <h1 className = "h1">Task List Application</h1>
       <TaskList tasks={tasks} onAddTask={addTask} />
       <TaskAssignment tasks={tasks} onAssignTask={assignTask} />
       {tasks.map(task => <TaskStatus key={task.id} task={task} onUpdateTaskStatus={updateTaskStatus} />)}
