@@ -11,8 +11,10 @@ function TaskList() {
   const handleSubmit = (event) => {
     event.preventDefault();
     if(task.trim() !== '' && task.length <= 100) {
-      setTasks([...tasks, { name: task, status: 'Incomplete' }]);
+      setTasks([...tasks, { name: task, status: 'Incomplete', assignedTo: '' }]);
       setTask('');
+    } else {
+      alert('Invalid input! Task must not be empty and must be within 100 characters.');
     }
   };
 

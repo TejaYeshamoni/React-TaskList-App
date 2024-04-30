@@ -7,6 +7,7 @@ let tasks = [{ name: 'Task1', status: 'Incomplete', assignedTo: '' }, { name: 'T
 function TaskAssignment() {
   const [selectedUser, setSelectedUser] = useState(users[0]);
   const [selectedTask, setSelectedTask] = useState(tasks[0].name);
+  const [taskList, setTaskList] = useState(tasks);
 
   const handleUserChange = (event) => {
     setSelectedUser(event.target.value);
@@ -17,7 +18,8 @@ function TaskAssignment() {
   };
 
   const assignTask = () => {
-    tasks = tasks.map(task => task.name === selectedTask ? { ...task, assignedTo: selectedUser } : task);
+    const updatedTasks = taskList.map(task => task.name === selectedTask ? { ...task, assignedTo: selectedUser } : task);
+    setTaskList(updatedTasks);
   };
 
   return (
@@ -26,11 +28,11 @@ function TaskAssignment() {
         {users.map(user => <option key={user} value={user}>{user}</option>)}
       </select>
       <select value={selectedTask} onChange={handleTaskChange}>
-        {tasks.map(task => <option key={task.name} value={task.name}>{task.name}</option>)}
+        {taskList.map(task => <option key={task.name} value={task.name}>{task.name}</option>)}
       </select>
       <button onClick={assignTask}>Assign Task</button>
       <ul>
-        {tasks.map((task, index) => <li key={index}>{task.name} is assigned to {task.assignedTo}</li>)}
+        {taskList.map((task, index) => <li key={index}>{task.name} is assigned to {task.assignedTo}</li>)}
       </ul>
     </div>
   );
