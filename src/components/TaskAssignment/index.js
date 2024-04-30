@@ -1,40 +1,39 @@
 import React, { useState } from 'react';
 
-const TaskAssignment = ({ tasks, setTasks }) => {
-  const [selectedTask, setSelectedTask] = useState('');
-  const [assignedUser, setAssignedUser] = useState('');
+// Assuming you have a list of users and tasks
+const users = ['User1', 'User2', 'User3'];
+let tasks = [{ name: 'Task1', status: 'Incomplete', assignedTo: '' }, { name: 'Task2', status: 'Incomplete', assignedTo: '' }];
 
-  const handleAssignTask = () => {
-    if (selectedTask && assignedUser) {
-      const updatedTasks = tasks.map((task) =>
-        task.id === selectedTask ? { ...task, assignedTo: assignedUser } : task
-      );
-      setTasks(updatedTasks);
-      setSelectedTask('');
-      setAssignedUser('');
-    }
+function TaskAssignment() {
+  const [selectedUser, setSelectedUser] = useState(users[0]);
+  const [selectedTask, setSelectedTask] = useState(tasks[0].name);
+
+  const handleUserChange = (event) => {
+    setSelectedUser(event.target.value);
+  };
+
+  const handleTaskChange = (event) => {
+    setSelectedTask(event.target.value);
+  };
+
+  const assignTask = () => {
+    tasks = tasks.map(task => task.name === selectedTask ? { ...task, assignedTo: selectedUser } : task);
   };
 
   return (
     <div>
-      <h2>Assign Tasks</h2>
-      <select value={selectedTask} onChange={(e) => setSelectedTask(e.target.value)}>
-        <option value="">Select a task</option>
-        {tasks.map((task) => (
-          <option key={task.id} value={task.id}>
-            {task.name}
-          </option>
-        ))}
+      <select value={selectedUser} onChange={handleUserChange}>
+        {users.map(user => <option key={user} value={user}>{user}</option>)}
       </select>
-      <input
-        type="text"
-        placeholder="Assign to user/team"
-        value={assignedUser}
-        onChange={(e) => setAssignedUser(e.target.value)}
-      />
-      <button onClick={handleAssignTask}>Assign</button>
+      <select value={selectedTask} onChange={handleTaskChange}>
+        {tasks.map(task => <option key={task.name} value={task.name}>{task.name}</option>)}
+      </select>
+      <button onClick={assignTask}>Assign Task</button>
+      <ul>
+        {tasks.map((task, index) => <li key={index}>{task.name} is assigned to {task.assignedTo}</li>)}
+      </ul>
     </div>
   );
-};
+}
 
 export default TaskAssignment;
