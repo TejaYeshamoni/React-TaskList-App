@@ -1,5 +1,21 @@
 import React from 'react';
 import { PieChart } from 'react-minimal-pie-chart';
+import './index.css'; 
+
+const statusColors = {
+  'Incomplete': '#FF0000',
+  'Started': '#FFFF00',
+  'In Progress': '#0000FF',
+  'Completed': '#00FF00'
+};
+
+function Task({ task }) {
+  return (
+    <li className="task-item">
+      {task.name} - Status: <span className={`status ${task.status.toLowerCase()}`}>{task.status}</span> - Assigned to: {task.assignedTo}
+    </li>
+  );
+}
 
 function TaskSummary({ tasks }) {
   const taskStatusCounts = tasks.reduce((counts, task) => {
@@ -10,19 +26,15 @@ function TaskSummary({ tasks }) {
   const data = Object.keys(taskStatusCounts).map(status => ({
     title: status,
     value: taskStatusCounts[status],
-    color: status === 'Completed' ? '#00FF00' : '#FF0000'
+    color: statusColors[status]
   }));
 
   return (
-    <div>
-      <h2>Task Summary</h2>
-      <PieChart data={data} />
-      <ul>
-        {tasks.map((task, index) => (
-          <li key={index}>
-            {task.name} - Status: {task.status} - Assigned to: {task.assignedTo}
-          </li>
-        ))}
+    <div className="task-summary">
+      <h2 className="summary-title">Task Summary</h2>
+      <PieChart data={data} className="summary-chart" />
+      <ul className="task-list">
+        {tasks.map((task) => <Task key={task.id} task={task} />)}
       </ul>
     </div>
   );
